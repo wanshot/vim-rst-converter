@@ -6,11 +6,13 @@ let s:save_cpo = &cpo
 set cpo&vim
 
 let s:space = ' '
+let s:rst_indent = '   '
 let s:directive_front_symbol = '..'
 let s:directive_rear_symbol = '::'
 
 let s:directive_type_list = [
       \["CsvTableDirective", '\v^csvtable\s*.*', 'csv-table'],
+      \["ListTableDirective", "\v^listtable\s*", 'list-table'],
       \["CodeBlockDirective", '\v^codeblock\s*.*', 'code-block']
       \]
 
@@ -18,11 +20,14 @@ let s:option_line_pattern = '\v^-\a\s+\.*(,|.)*'
 let s:option_pattern = '\v^-\zs\a\ze'
 let s:option_args = '\v^-\a\s+\zs.*(,|.)*'
 
+let s:csv_content_pattern = '\v^.+(.|,)*.$'
+
 let s:option_parse = {
       \"h": "   :header: ",
       \"w": "   :widths: ",
       \"c": "   :class: ",
       \}
+
 
 
 function! BuildDirectiveLine(type, label)
@@ -75,6 +80,19 @@ function! s:option_parse.csv_table(opt, args) dict
   return line[:-3]
 endfunction
 
+function! ConvertCsvContent()
+  let column_list = split(a:args, ",")
+  let line = s:rst_indent
+  for column in column_list
+    let line = line . '"' . column . '"' . ', '
+  endfor
+  echo line
+  endfor
+endfunction
+
+csvtable
+-h sss,sss
+aaaa,aaaa
 
 function! CodeBlockDirective(num, end_num)
   for n in range(a:num+1, a:end_num)
