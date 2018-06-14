@@ -3,7 +3,7 @@
 " license: mit license
 
 let s:save_cpo = &cpo
-set cpo&vim
+set cpo&vimっっｓ
 
 let s:space = ' '
 let s:rst_indent = '   '
