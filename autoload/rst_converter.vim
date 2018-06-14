@@ -55,7 +55,7 @@ function! MatcherCallFunc() range
       endif
     endfor
   endfor
-endfunction
+endfunctionっっっっっｓ
 
 
 function! CsvTableDirective(num, end_num, dt)
